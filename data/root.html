@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <meta charset="UTF-8">
+  <title>Webserver demo</title>
+
+  <style>
+    body {
+      background-color: #333; /* Dark Gray */
+      font-family: Arial, sans-serif;
+      color: #f0ead6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Make the body take up the full viewport height */
+      margin: 0; /* Remove default margin to ensure buttons are centered */
+    }
+
+    h1 {
+      color: #4CAF50; /* Green */
+      text-align: center;
+      font-size: 24px; /* Increase font size */
+    }
+
+    button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 30px; /* Increase padding */
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 18px; /* Increase font size */
+      margin: 10px 0; /* Increase margin */
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+      width: 250px; /* Increase image size */
+    }
+  </style>
+
+  <script>
+    var pcStartTime = new Date();
+    var espTime = new Date('1970-01-01 00:00:1');
+
+    function updateElapsedTime() {
+      var pcNow = new Date();
+      var elapsedMs = pcNow - pcStartTime;
+      var calculatedEspTime = new Date(espTime.getTime() + elapsedMs);
+      var seconds = calculatedEspTime.getSeconds();
+      var milliseconds = Math.floor(calculatedEspTime.getMilliseconds() / 100); // Get the first decimal place of seconds
+      var timeStr = calculatedEspTime.toISOString().slice(0, 19).replace('T', ' ') + '.' + milliseconds;
+      document.getElementById('calculated-time').innerHTML = 'Calculated Time: <strong>' + timeStr + '</strong>';
+    }
+
+    setInterval(updateElapsedTime, 100); // Update every 100 milliseconds
+    updateElapsedTime();
+
+    function uploadTime() {
+      espTime = new Date();
+      updateElapsedTime();
+      var pcTime = new Date().toISOString();
+      fetch('/upload', {
+        method: 'POST',
+        body: pcTime
+      }).then(response => {
+        if (response.ok) {
+          alert('Time uploaded successfully.');
+        } else {
+          alert('Error uploading time.');
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <img src="pacman_logo.png" alt="Logo">
+  <h1>Simple Web Server Demo with JavaScript!</h1>
+  <p id='calculated-time'>Calculated Time: <strong></strong></p>
+  <button onclick='uploadTime()'>Upload Time</button>
+  <button><a href="/download" style="text-decoration: none; color: white;">Download</a></button>
+</body>
+</html>

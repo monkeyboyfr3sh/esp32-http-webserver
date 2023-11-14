@@ -1,0 +1,11 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "idf.port": "/dev/ttyUSB1",
+  "idf.flashType": "UART",
+  "idf.adapterTargetName": "esp32",
+  "C_Cpp.default.compilerPath": "/home/david/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc",
+  "files.associations": {
+    "string.h": "c",
+    "esp_https_server.h": "c"
+  }
+}
